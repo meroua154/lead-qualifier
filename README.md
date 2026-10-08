@@ -160,38 +160,65 @@ L'application permet de :
 
 ## 🏗️ Architecture
 
-Prospect
-│
-▼
-ImmoLead AI
-Application
-│
-▼
-Python
-│
-▼
-Ollama
-Qwen3:4b
-│
-▼
-Extraction des données
-│
-▼
-Lead Scoring
-│
-▼
-Webhook
-│
-▼
-n8n
-│
-├───────────────┐
-▼               ▼
-Google Sheets   IF
-                 │
-                 ▼
-          Email automatique
+```text
+                    Prospect
+                       │
+                       ▼
+              ┌─────────────────┐
+              │   ImmoLead AI   │
+              │   Application   │
+              └────────┬────────┘
+                       │
+                       ▼
+                    Python
+                       │
+                       ▼
+              ┌─────────────────┐
+              │     Ollama      │
+              │    Qwen3:4b     │
+              └────────┬────────┘
+                       │
+                       ▼
+            Extraction des données
+                       │
+                       ▼
+                Lead Scoring
+                       │
+                       ▼
+                  Webhook
+                       │
+                       ▼
+                     n8n
+                       │
+              ┌────────┴────────┐
+              ▼                 ▼
+       Google Sheets            IF
+                                  │
+                                  ▼
+                         Email automatique
+```
 
+### Flux de traitement
+
+**1. Prospect** → Le prospect envoie son message.
+
+**2. ImmoLead AI** → L'application reçoit et analyse le message.
+
+**3. Python + Ollama** → Le message est envoyé au modèle local `Qwen3:4b`.
+
+**4. Extraction des données** → Les informations importantes sont extraites et structurées.
+
+**5. Lead Scoring** → Un score sur 100 et un niveau de priorité (`LOW`, `MEDIUM`, `HIGH`) sont attribués.
+
+**6. Webhook** → Les données du lead peuvent être envoyées à n8n.
+
+**7. n8n** → Le workflow automatise le traitement du lead.
+
+**8. Google Sheets** → Les informations du lead sont enregistrées.
+
+**9. IF** → Une condition est vérifiée.
+
+**10. Email automatique** → Si la condition est remplie, un email est envoyé automatiquement.
 ---
 
 ## 🛠️ Technologies utilisées
