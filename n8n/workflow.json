@@ -1,0 +1,274 @@
+{
+  "name": "lead-qualifier",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-qualifier",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "cf124f51-5710-4c6d-8da9-68f904d9499b",
+      "name": "Webhook",
+      "webhookId": "fbd52adf-e0ea-46db-bb9e-395eb77b312d"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "4e283a7c-9c34-4e45-a902-bb17c14a2920",
+              "leftValue": "={{ $json.body.priority }}",
+              "rightValue": "HIGH",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "d02531fb-5519-4aca-b9b8-aade9a9b9dfd",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "fromEmail": "meroua369@gmail.com",
+        "toEmail": "merouarezig15@gmail.com",
+        "subject": "=  🔥 Lead {{ $json.body.priority }} : {{ $json.body.lead.property_type }} à {{ $json.body.lead.city }}",
+        "emailFormat": "text",
+        "text": "=  Score : {{ $json.body.score }}/100\n  Budget : {{ $json.body.lead.budget }} €\n  Type : {{ $json.body.lead.type }}\n  Date : {{ $json.body.lead.move_in_date }}\n\n  Message : {{ $json.body.raw_message }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        416,
+        -64
+      ],
+      "id": "d1df6cd3-ccc9-4a20-875e-135c54e85994",
+      "name": "Send an Email",
+      "webhookId": "f6ebcf25-8903-4e4a-956e-cd9dda0ce661",
+      "credentials": {
+        "smtp": {
+          "id": "EGCwLEzBZTjFzuoQ",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1jMA8iEGtgrwthqRmr1Z0n3MCLVB_0HPxsOmJ2PGK0Yk",
+          "mode": "list",
+          "cachedResultName": "ImmoLead AI - Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1jMA8iEGtgrwthqRmr1Z0n3MCLVB_0HPxsOmJ2PGK0Yk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Feuille 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1jMA8iEGtgrwthqRmr1Z0n3MCLVB_0HPxsOmJ2PGK0Yk/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "created_at": "={{ $json.body.created_at }}",
+            "type": "={{ $json.body.lead.type }}",
+            "city": "={{ $json.body.lead.city }}",
+            "budget": "={{ $json.body.lead.budget }}",
+            "property_type": "={{ $json.body.lead.property_type }}",
+            "bedrooms": "={{ $json.body.lead.bedrooms }}",
+            "move_in_date": "={{ $json.body.lead.move_in_date }}",
+            "score": "={{ $json.body.score }}",
+            "priority": "={{ $json.body.priority }}",
+            "message": "={{ $json.body.raw_message }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "type",
+              "displayName": "type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "city",
+              "displayName": "city",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "budget",
+              "displayName": "budget",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "property_type",
+              "displayName": "property_type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "bedrooms",
+              "displayName": "bedrooms",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "move_in_date",
+              "displayName": "move_in_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "score",
+              "displayName": "score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "priority",
+              "displayName": "priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        240,
+        144
+      ],
+      "id": "3775eb26-cdb2-4ecb-8a8f-51c07df8a713",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "ItNtuw9y2PxQqd00",
+          "name": "Google Sheets account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send an Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send an Email": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "executionTimeout": -1,
+    "availableInMCP": false
+  },
+  "versionId": "01c097d0-1a98-46de-bf71-d01778b5f58b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8e3c11a9a3682a8e2af49e6cf42fdf55f425034cb643d4d63af346e5be2703de"
+  },
+  "id": "OJelObq7vB04Knuq",
+  "tags": []
+}
